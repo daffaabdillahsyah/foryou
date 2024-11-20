@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hadiah Untuk Sayangku</title>
+    <title>foryouu</title>
     <style>
         body {
             display: flex;
@@ -134,7 +134,7 @@
             transition: transform 0.5s;
         }
 
-        /* Tambahkan CSS untuk responsive design */
+        /* Add CSS for responsive design */
         @media (max-width: 768px) {
             .gift-box {
                 width: 150px;
@@ -176,7 +176,7 @@
             }
         }
 
-        /* Tambahan style untuk background hearts */
+        /* Additional style for background hearts */
         .background-heart {
             position: fixed;
             cursor: pointer;
@@ -213,7 +213,7 @@
             }
         }
 
-        /* Tambahkan animasi untuk text yang muncul saat click */
+        /* Add animation for text that appears on click */
         @keyframes fadeUp {
             0% {
                 transform: translateY(0);
@@ -233,7 +233,7 @@
             pointer-events: none;
         }
 
-        /* Style untuk background hearts yang terpisah */
+        /* Style for separate background hearts */
         .static-heart {
             position: fixed;
             width: 20px;
@@ -271,7 +271,7 @@
             opacity: 1;
         }
 
-        /* Style untuk form pertanyaan */
+        /* Style for question form */
         .question-form {
             background: white;
             padding: 20px;
@@ -314,7 +314,7 @@
             font-size: 18px;
         }
 
-        /* Tambahkan style untuk popup */
+        /* Add style for popup */
         .popup {
             display: none;
             position: fixed;
@@ -368,7 +368,7 @@
     </div>
 
     <script>
-        // Update fungsi createBackgroundHeart
+        // Update createBackgroundHeart function
         function createBackgroundHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart background-heart';
@@ -414,11 +414,11 @@
             setTimeout(() => heart.remove(), 10000);
         }
 
-        // Update fungsi createHeart untuk explosion
+        // Update createHeart function for explosion
         function createHeart(x, y) {
             const heart = document.createElement('div');
             heart.className = 'heart';
-            // Set posisi awal di dalam box
+            // Set initial position inside the box
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
             
@@ -453,7 +453,7 @@
         // Create background hearts more frequently
         setInterval(createBackgroundHeart, 1000); // Every second
 
-        // Update fungsi openGift
+        // Update openGift function
         function openGift() {
             const giftBox = document.querySelector('.gift-box');
             const giftLid = document.querySelector('.gift-lid');
@@ -479,10 +479,10 @@
                     messageCard.classList.add('show');
                 });
                 
-                // Tampilkan form pertanyaan setelah kartu muncul
+                // Show question form after card appears
                 setTimeout(() => {
                     questionForm.style.display = 'block';
-                    // Reset posisi tombol Yes
+                    // Reset Yes button position
                     const yesBtn = document.getElementById('yesBtn');
                     yesBtn.style.position = 'relative';
                     yesBtn.style.left = 'auto';
@@ -491,7 +491,7 @@
             }, 3000);
         }
 
-        // Update fungsi createStaticHearts
+        // Update createStaticHearts function
         function createStaticHearts() {
             const existingHearts = document.querySelectorAll('.static-heart');
             existingHearts.forEach(heart => heart.remove());
@@ -500,12 +500,12 @@
                 const heart = document.createElement('div');
                 heart.className = 'static-heart';
                 
-                // Ukuran yang lebih konsisten
+                // More consistent size
                 const size = 15 + Math.random() * 5; // 15-20px
                 heart.style.width = size + 'px';
                 heart.style.height = size + 'px';
                 
-                // Sesuaikan ukuran pseudo-elements
+                // Adjust pseudo-elements size
                 heart.style.setProperty('--heart-size', size + 'px');
                 
                 const left = Math.random() * (window.innerWidth - size);
@@ -524,7 +524,7 @@
                     text.textContent = 'I Love You! ❤️';
                     document.body.appendChild(text);
                     
-                    // Mini explosion saat di-click
+                    // Mini explosion on click
                     for(let i = 0; i < 8; i++) {
                         setTimeout(() => {
                             createHeart(left + size/2, top + size/2);
@@ -538,50 +538,50 @@
             }
         }
 
-        // Panggil createStaticHearts saat window resize
+        // Call createStaticHearts on window resize
         window.addEventListener('resize', createStaticHearts);
 
-        // Update fungsi moveButton untuk support mobile
+        // Update moveButton function to support mobile
         function moveButton(event) {
             const yesBtn = document.getElementById('yesBtn');
             
-            // Batasi pergerakan hanya 10px dari posisi awal
+            // Limit movement to only 10px from the initial position
             const maxDistance = 100;
             
-            // Hitung posisi baru relatif dari posisi saat ini
+            // Calculate new position relative to the current position
             const randomX = (Math.random() - 0.5) * maxDistance * 2;
             const randomY = (Math.random() - 0.5) * maxDistance * 2;
             
-            // Terapkan posisi baru dengan z-index tinggi
+            // Apply new position with high z-index
             yesBtn.style.position = 'relative';
             yesBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-            yesBtn.style.zIndex = 1001; // Pastikan di atas elemen lain
+            yesBtn.style.zIndex = 1001; // Ensure it's above other elements
             yesBtn.style.transition = 'transform 0.05s ease';
         }
 
-        // Update fungsi showLove
+        // Update showLove function
         function showLove() {
             document.getElementById('questionForm').style.display = 'none';
             document.getElementById('sadPopup').style.display = 'block';
         }
 
-        // Tambahkan fungsi closePopup
+        // Add closePopup function
         function closePopup() {
             document.getElementById('sadPopup').style.display = 'none';
             createHeartExplosion(window.innerWidth/2, window.innerHeight/2);
         }
 
-        // Inisialisasi dengan event yang berbeda untuk mobile dan desktop
+        // Initialize with different events for mobile and desktop
         window.onload = function() {
             createStaticHearts();
             const yesBtn = document.getElementById('yesBtn');
             
-            // Deteksi device
+            // Detect device
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // Mobile: gunakan touchstart
+                // Mobile: use touchstart
                 yesBtn.addEventListener('touchstart', moveButton);
             } else {
-                // Desktop: gunakan mouseover
+                // Desktop: use mouseover
                 yesBtn.addEventListener('mouseover', moveButton);
             }
         };

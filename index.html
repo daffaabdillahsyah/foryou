@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hadiah Untuk Sayangku</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffd6e0;
+            margin: 0;
+        }
+
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            background-color: #8b4513;
+            position: relative;
+            cursor: pointer;
+            transform-origin: bottom;
+            transition: transform 0.5s;
+        }
+
+        .gift-lid {
+            width: 220px;
+            height: 40px;
+            background-color: #a0522d;
+            position: absolute;
+            top: -40px;
+            left: -10px;
+            transform-origin: center bottom;
+            transition: transform 1s;
+        }
+
+        .ribbon {
+            width: 40px;
+            height: 40px;
+            background-color: #ff69b4;
+            position: absolute;
+            top: -20px;
+            left: 80px;
+        }
+
+        .message-card {
+            background: linear-gradient(145deg, #ffffff, #fff0f5);
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+            display: none;
+            position: absolute;
+            width: 80%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transform: scale(0);
+            transition: transform 0.8s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+        }
+
+        .message-card.show {
+            transform: scale(1);
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            margin-right: 30px;
+            float: left;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .message-text {
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
+            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: #ff69b4;
+            margin-top: 30px;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            transform: rotate(45deg);
+            visibility: hidden;
+            animation: float 2s ease-in-out;
+            z-index: 1000;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart:before {
+            left: -10px;
+        }
+
+        .heart:after {
+            top: -10px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: rotate(45deg) translate(0, 0) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: rotate(45deg) translate(var(--tx), var(--ty)) scale(1);
+            }
+            100% {
+                transform: rotate(45deg) translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .gift-box-inner {
+            width: 100%;
+            height: 100%;
+            background-color: #a0522d;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.5s;
+        }
+
+        /* Tambahkan CSS untuk responsive design */
+        @media (max-width: 768px) {
+            .gift-box {
+                width: 150px;
+                height: 150px;
+            }
+
+            .gift-lid {
+                width: 170px;
+                height: 30px;
+                top: -30px;
+                left: -10px;
+            }
+
+            .ribbon {
+                width: 30px;
+                height: 30px;
+                top: -15px;
+                left: 60px;
+            }
+
+            .message-card {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+                border-radius: 60px;
+                margin-right: 15px;
+                float: none;
+                margin-bottom: 15px;
+            }
+
+            .message-text {
+                font-size: 18px;
+                margin-top: 15px;
+                clear: both;
+            }
+        }
+
+        /* Tambahan style untuk background hearts */
+        .background-heart {
+            position: fixed;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 100;
+        }
+
+        .background-heart:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Update responsive design */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .message-card {
+                padding: 20px;
+                width: 90%;
+                margin: 20px;
+            }
+
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+                float: none;
+                margin: 0 auto 20px;
+                display: block;
+            }
+
+            .message-text {
+                font-size: 20px;
+                text-align: center;
+                margin-top: 20px;
+            }
+        }
+
+        /* Tambahkan animasi untuk text yang muncul saat click */
+        @keyframes fadeUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+        }
+
+        .love-text {
+            position: absolute;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        /* Style untuk background hearts yang terpisah */
+        .static-heart {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            transform: rotate(45deg);
+            opacity: 0.3;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+
+        .static-heart:before,
+        .static-heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            position: absolute;
+            transform-origin: center center;
+        }
+
+        .static-heart:before {
+            left: -10px;
+            top: 0;
+        }
+
+        .static-heart:after {
+            top: -10px;
+            left: 0;
+        }
+
+        .static-heart:hover {
+            opacity: 1;
+        }
+
+        /* Style untuk form pertanyaan */
+        .question-form {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            position: fixed;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-yes {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .btn-no {
+            background-color: #cccccc;
+            color: black;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Tambahkan style untuk popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            z-index: 1002;
+            font-size: 24px;
+            color: #ff69b4;
+        }
+
+        .popup-button {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="gift-box" onclick="openGift()">
+        <div class="gift-lid"></div>
+        <div class="gift-box-inner"></div>
+        <div class="ribbon"></div>
+    </div>
+
+    <div class="message-card" id="messageCard">
+        <img src="love.jpg" class="profile-pic" alt="Foto Pacar">
+        <p class="message-text">I love you sayang, terimakasih telah menjadi pacar terbaik didunia ❤️</p>
+    </div>
+
+    <div class="question-form" id="questionForm" style="display: none;">
+        <div class="question-text">Do you love me back? 💕</div>
+        <div class="answer-buttons">
+            <button class="btn btn-yes" id="yesBtn">Yes</button>
+            <button class="btn btn-no" onclick="showLove()">No</button>
+        </div>
+    </div>
+
+    <div class="popup" id="sadPopup">
+        <div>Kamu ga sayang aku? 😢</div>
+        <button class="popup-button" onclick="closePopup()">Maaf sayang 😔</button>
+    </div>
+
+    <script>
+        // Update fungsi createBackgroundHeart
+        function createBackgroundHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart background-heart';
+            
+            const size = Math.random() * 20 + 10;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            
+            // Random position
+            const left = Math.random() * (window.innerWidth - size);
+            const top = Math.random() * (window.innerHeight - size);
+            heart.style.left = left + 'px';
+            heart.style.top = top + 'px';
+            
+            // Click event
+            heart.onclick = function() {
+                // Create text
+                const text = document.createElement('div');
+                text.className = 'love-text';
+                text.style.left = (left - 30) + 'px';
+                text.style.top = (top - 20) + 'px';
+                text.style.color = '#ff69b4';
+                text.style.fontSize = '20px';
+                text.style.animation = 'fadeUp 1s forwards';
+                text.textContent = 'I Love You! ❤️';
+                document.body.appendChild(text);
+                
+                // Remove text after animation
+                setTimeout(() => text.remove(), 1000);
+                
+                // Create mini explosion
+                for(let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createHeart(left + size/2, top + size/2);
+                    }, i * 50);
+                }
+                
+                // Remove clicked heart
+                heart.remove();
+            };
+            
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        // Update fungsi createHeart untuk explosion
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            // Set posisi awal di dalam box
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            // Random direction with more upward bias
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 100 + Math.random() * 200;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 200; // More upward bias
+            
+            heart.style.setProperty('--tx', tx + 'px');
+            heart.style.setProperty('--ty', ty + 'px');
+            
+            document.body.appendChild(heart);
+            heart.style.visibility = 'visible';
+            
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        function createHeartExplosion(x, y) {
+            // Increase number of waves and hearts
+            for(let wave = 0; wave < 8; wave++) {
+                setTimeout(() => {
+                    for(let i = 0; i < 40; i++) {
+                        setTimeout(() => {
+                            createHeart(x, y);
+                        }, i * 20);
+                    }
+                }, wave * 200);
+            }
+        }
+
+        // Create background hearts more frequently
+        setInterval(createBackgroundHeart, 1000); // Every second
+
+        // Update fungsi openGift
+        function openGift() {
+            const giftBox = document.querySelector('.gift-box');
+            const giftLid = document.querySelector('.gift-lid');
+            const giftBoxInner = document.querySelector('.gift-box-inner');
+            const messageCard = document.getElementById('messageCard');
+            const questionForm = document.getElementById('questionForm');
+
+            const boxRect = giftBox.getBoundingClientRect();
+            const centerX = boxRect.left + boxRect.width / 2;
+            const centerY = boxRect.top + boxRect.height / 2;
+
+            giftLid.style.transform = 'rotateX(-180deg) translateY(-40px)';
+            
+            setTimeout(() => {
+                giftBoxInner.style.transform = 'rotateX(-90deg)';
+                createHeartExplosion(centerX, centerY);
+            }, 500);
+            
+            setTimeout(() => {
+                giftBox.style.display = 'none';
+                messageCard.style.display = 'block';
+                requestAnimationFrame(() => {
+                    messageCard.classList.add('show');
+                });
+                
+                // Tampilkan form pertanyaan setelah kartu muncul
+                setTimeout(() => {
+                    questionForm.style.display = 'block';
+                    // Reset posisi tombol Yes
+                    const yesBtn = document.getElementById('yesBtn');
+                    yesBtn.style.position = 'relative';
+                    yesBtn.style.left = 'auto';
+                    yesBtn.style.top = 'auto';
+                }, 2000);
+            }, 3000);
+        }
+
+        // Update fungsi createStaticHearts
+        function createStaticHearts() {
+            const existingHearts = document.querySelectorAll('.static-heart');
+            existingHearts.forEach(heart => heart.remove());
+
+            for(let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'static-heart';
+                
+                // Ukuran yang lebih konsisten
+                const size = 15 + Math.random() * 5; // 15-20px
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                
+                // Sesuaikan ukuran pseudo-elements
+                heart.style.setProperty('--heart-size', size + 'px');
+                
+                const left = Math.random() * (window.innerWidth - size);
+                const top = Math.random() * (window.innerHeight - size);
+                heart.style.left = left + 'px';
+                heart.style.top = top + 'px';
+                
+                heart.onclick = function() {
+                    const text = document.createElement('div');
+                    text.className = 'love-text';
+                    text.style.left = (left - 30) + 'px';
+                    text.style.top = (top - 20) + 'px';
+                    text.style.color = '#ff69b4';
+                    text.style.fontSize = '20px';
+                    text.style.animation = 'fadeUp 1s forwards';
+                    text.textContent = 'I Love You! ❤️';
+                    document.body.appendChild(text);
+                    
+                    // Mini explosion saat di-click
+                    for(let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            createHeart(left + size/2, top + size/2);
+                        }, i * 50);
+                    }
+                    
+                    setTimeout(() => text.remove(), 1000);
+                };
+                
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Panggil createStaticHearts saat window resize
+        window.addEventListener('resize', createStaticHearts);
+
+        // Update fungsi moveButton untuk support mobile
+        function moveButton(event) {
+            const yesBtn = document.getElementById('yesBtn');
+            
+            // Batasi pergerakan hanya 10px dari posisi awal
+            const maxDistance = 100;
+            
+            // Hitung posisi baru relatif dari posisi saat ini
+            const randomX = (Math.random() - 0.5) * maxDistance * 2;
+            const randomY = (Math.random() - 0.5) * maxDistance * 2;
+            
+            // Terapkan posisi baru dengan z-index tinggi
+            yesBtn.style.position = 'relative';
+            yesBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            yesBtn.style.zIndex = 1001; // Pastikan di atas elemen lain
+            yesBtn.style.transition = 'transform 0.05s ease';
+        }
+
+        // Update fungsi showLove
+        function showLove() {
+            document.getElementById('questionForm').style.display = 'none';
+            document.getElementById('sadPopup').style.display = 'block';
+        }
+
+        // Tambahkan fungsi closePopup
+        function closePopup() {
+            document.getElementById('sadPopup').style.display = 'none';
+            createHeartExplosion(window.innerWidth/2, window.innerHeight/2);
+        }
+
+        // Inisialisasi dengan event yang berbeda untuk mobile dan desktop
+        window.onload = function() {
+            createStaticHearts();
+            const yesBtn = document.getElementById('yesBtn');
+            
+            // Deteksi device
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // Mobile: gunakan touchstart
+                yesBtn.addEventListener('touchstart', moveButton);
+            } else {
+                // Desktop: gunakan mouseover
+                yesBtn.addEventListener('mouseover', moveButton);
+            }
+        };
+    </script>
+</body>
+</html> 
